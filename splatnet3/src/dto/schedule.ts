@@ -78,11 +78,11 @@ export class ScheduleRequest {
 export class ScheduleResponse {
   @Expose()
   @ApiProperty({ example: '2022-10-08T08:00:00Z' })
-  startTime: string;
+  start_time: string;
 
   @Expose()
   @ApiProperty({ example: '2022-10-10T00:00:00Z' })
-  endTime: string;
+  end_time: string;
 
   @Expose()
   @ApiProperty({ example: 2 })
@@ -90,20 +90,20 @@ export class ScheduleResponse {
 
   @Expose()
   @ApiProperty({ example: [0, 0, 0, 0] })
-  weaponList: number[];
+  weapon_list: number[];
 
   @Expose()
   @ApiProperty({ example: null })
-  rareWeapon: number | null;
+  rare_weapon: number | null;
 
   constructor(document: Node) {
-    this.startTime = document.startTime;
-    this.endTime = document.endTime;
+    this.start_time = document.startTime;
+    this.end_time = document.endTime;
     this.stage = document.setting.coopStage.coopStageId;
-    this.weaponList = document.setting.weapons.map(
+    this.weapon_list = document.setting.weapons.map(
       (weapon) => weapon.image.url,
     );
-    this.rareWeapon = null;
+    this.rare_weapon = null;
   }
 }
 

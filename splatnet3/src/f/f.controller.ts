@@ -20,6 +20,7 @@ export class FController {
   session_token(
     @Body(new ValidationPipe({ transform: true })) request: IminkRequest,
   ): Promise<IminkResponse> {
+    console.log(request);
     return this.service.get_imink(request);
   }
 }

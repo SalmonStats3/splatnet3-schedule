@@ -34,11 +34,11 @@ export class SchedulesController {
     return this.service.get_all_schedules();
   }
 
-  @Get('update')
-  @ApiTags('スケジュール')
-  @ApiOperation({ operationId: '追加' })
-  @ApiOkResponse({ type: [ScheduleResponse] })
-  add_schedules(): Promise<void> {
-    return this.service.add_schedules(schedules as [ScheduleResponse]);
-  }
+  // @Get('update')
+  // @ApiTags('スケジュール')
+  // @ApiOperation({ operationId: '追加' })
+  // @ApiOkResponse({ type: [ScheduleResponse] })
+  // add_schedules(): Promise<void> {
+  //   return this.service.add_schedules(schedules as [ScheduleResponse]);
+  // }
 }

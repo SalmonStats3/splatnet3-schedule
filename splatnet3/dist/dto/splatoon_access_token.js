@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SplatoonAccessTokenResponse = exports.SplatoonAccessTokenResult = exports.SplatoonAccessTokenRequest = exports.SplatoonAccessTokenUpgradeRequired = exports.SplatoonAccessTokenUnauthorized = exports.SplatoonAccessTokenInvalidToken = exports.SplatoonAccessTokenNoResources = exports.SplatoonAccessTokenBadRequest = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
 class SplatoonAccessTokenBadRequest {
 }
 __decorate([
@@ -87,33 +89,50 @@ __decorate([
 ], SplatoonAccessTokenUpgradeRequired.prototype, "correlationId", void 0);
 exports.SplatoonAccessTokenUpgradeRequired = SplatoonAccessTokenUpgradeRequired;
 class SplatoonAccessTokenRequest {
+    constructor(imink, version, naIdToken) {
+        this.version = version;
+        this.f = imink.f;
+        this.request_id = imink.request_id;
+        this.timestamp = imink.timestamp;
+        this.naIdToken = naIdToken;
+    }
 }
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '2.3.1',
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonAccessTokenRequest.prototype, "version", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 'fK0khI0DhU8KmMKxX6oixI:APA91bEcKhiHi4acYjs495cIih46knhphM1SEUJo7eBu4cCPXfBSK82XnpnDkCrowl9DWN8v7hqwN2eDnFaclhnOyUKE7N1YXtwtps4ES7oQPMQmFqb86NK_V0hblS2ojYoDpSOa7mOD',
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonAccessTokenRequest.prototype, "naIdToken", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '9e4e5b2e13f46e399adb5f390fd95b2b78de7e3d7e886633f8d16c479382d5e5d44caca68bc19351fe1d0b69c7',
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonAccessTokenRequest.prototype, "f", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '00000000-0000-0000-0000-000000000000',
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonAccessTokenRequest.prototype, "request_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], SplatoonAccessTokenRequest.prototype, "timestamp", void 0);
 exports.SplatoonAccessTokenRequest = SplatoonAccessTokenRequest;

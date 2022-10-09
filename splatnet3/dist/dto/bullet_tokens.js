@@ -12,6 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BulletTokenResponse = exports.BulletTokenRequest = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class BulletTokenRequest {
+    constructor(splatoon_access_token, version) {
+        this['X-GameWebToken'] = splatoon_access_token;
+        this['X-Web-View-Ver'] = version;
+        this['X-NaCountry'] = 'US';
+    }
 }
 __decorate([
     (0, swagger_1.ApiProperty)({ default: '1.0.0-42f70e51' }),

@@ -13,6 +13,7 @@ const axios_1 = require("axios");
 const schedule_1 = require("../dto/schedule");
 const lite_1 = require("firebase/firestore/lite");
 const app_1 = require("firebase/app");
+const snakecaseKeys = require("snakecase-keys");
 const firebaseConfig = {
     apiKey: 'AIzaSyBl8OR-wdFLZ3HnnTUzEq4t4eXce5Xu8gE',
     authDomain: 'tkgstratorwork.firebaseapp.com',
@@ -29,18 +30,18 @@ let SchedulesService = class SchedulesService {
     }
     async add_schedules(results) {
         results.forEach(async (result) => {
-            await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.startTime), {
+            await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.start_time), {
                 stage: result.stage,
-                startTime: result.startTime,
-                endTime: result.endTime,
-                weaponList: result.weaponList,
-                rareWeapon: result.rareWeapon,
+                startTime: result.start_time,
+                endTime: result.end_time,
+                weaponList: result.weapon_list,
+                rareWeapon: result.rare_weapon,
             });
         });
     }
     async get_all_schedules() {
         const schedules = (await (0, lite_1.getDocs)((0, lite_1.collection)(this.db, 'schedules'))).docs.map((doc) => doc.data());
-        const results = schedules.map((schedule) => schedule);
+        const results = schedules.map((schedule) => snakecaseKeys(schedule));
         return results;
     }
     async get_schedules(token, version) {
@@ -65,12 +66,12 @@ let SchedulesService = class SchedulesService {
             const response = await axios_1.default.post(url, parameters);
             const results = (0, class_transformer_1.plainToClass)(schedule_1.Schedule, response.data).data.coopGroupingSchedule.regularSchedules.nodes.map((node) => new schedule_1.ScheduleResponse(node));
             results.forEach(async (result) => {
-                await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.startTime), {
+                await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.start_time), {
                     stage: result.stage,
-                    startTime: result.startTime,
-                    endTime: result.endTime,
-                    weaponList: result.weaponList,
-                    rareWeapon: result.rareWeapon,
+                    startTime: result.start_time,
+                    endTime: result.end_time,
+                    weaponList: result.weapon_list,
+                    rareWeapon: result.rare_weapon,
                 });
             });
             return results;

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 
 export class AccessTokenInvalidGrant {
@@ -22,6 +23,7 @@ export class AccessTokenRequest {
     example:
       'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjgyMjY3NjksInR5cCI6InNlc3Npb25fdG9rZW4iLCJzdDpzY3AiOlswLDgsOSwxNywyM10sImF1ZCI6IjcxYjk2M2MxYjdiNmQxMTkiLCJzdWIiOiI1YWU4ZjdhNzhiMGNjYTRkIiwiaWF0IjoxNjY1MTU0NzY5LCJqdGkiOjEwMDY3NTUxMTgyLCJpc3MiOiJodHRwczovL2FjY291bnRzLm5pbnRlbmRvLmNvbSJ9.h5bOCthewRPK8GfZPY-zZeUUx-_JwA0CDFFFtRTy3NU',
   })
+  @Expose()
   @IsNotEmpty()
   readonly session_token: string;
 }

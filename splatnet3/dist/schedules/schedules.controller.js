@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const schedule_1 = require("../dto/schedule");
 const schedules_service_1 = require("./schedules.service");
-const schedules = require("./schedules.json");
 let SchedulesController = class SchedulesController {
     constructor(service) {
         this.service = service;
@@ -27,9 +26,6 @@ let SchedulesController = class SchedulesController {
     }
     get_all_schedules() {
         return this.service.get_all_schedules();
-    }
-    add_schedules() {
-        return this.service.add_schedules(schedules);
     }
 };
 __decorate([
@@ -52,15 +48,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SchedulesController.prototype, "get_all_schedules", null);
-__decorate([
-    (0, common_1.Get)('update'),
-    (0, swagger_1.ApiTags)('スケジュール'),
-    (0, swagger_1.ApiOperation)({ operationId: '追加' }),
-    (0, swagger_1.ApiOkResponse)({ type: [schedule_1.ScheduleResponse] }),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], SchedulesController.prototype, "add_schedules", null);
 SchedulesController = __decorate([
     (0, common_1.Controller)('schedules'),
     __metadata("design:paramtypes", [schedules_service_1.SchedulesService])

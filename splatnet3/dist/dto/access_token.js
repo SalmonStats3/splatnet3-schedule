@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessTokenResponse = exports.AccessTokenRequest = exports.AccessTokenInvalidGrant = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class AccessTokenInvalidGrant {
 }
@@ -38,6 +39,7 @@ __decorate([
         required: true,
         example: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjgyMjY3NjksInR5cCI6InNlc3Npb25fdG9rZW4iLCJzdDpzY3AiOlswLDgsOSwxNywyM10sImF1ZCI6IjcxYjk2M2MxYjdiNmQxMTkiLCJzdWIiOiI1YWU4ZjdhNzhiMGNjYTRkIiwiaWF0IjoxNjY1MTU0NzY5LCJqdGkiOjEwMDY3NTUxMTgyLCJpc3MiOiJodHRwczovL2FjY291bnRzLm5pbnRlbmRvLmNvbSJ9.h5bOCthewRPK8GfZPY-zZeUUx-_JwA0CDFFFtRTy3NU',
     }),
+    (0, class_transformer_1.Expose)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AccessTokenRequest.prototype, "session_token", void 0);

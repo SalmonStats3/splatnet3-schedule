@@ -18,9 +18,7 @@ async function bootstrap() {
     app.useGlobalPipes(new common_1.ValidationPipe({
         transform: true,
         transformOptions: {
-            ignoreDecorators: true,
             excludeExtraneousValues: true,
-            exposeDefaultValues: true,
         },
     }));
     const build = path.resolve(process.cwd(), 'docs');

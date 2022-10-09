@@ -15,6 +15,8 @@ import { FService } from './f/f.service';
 import { BulletTokensService } from './bullet_tokens/bullet_tokens.service';
 import { SchedulesController } from './schedules/schedules.controller';
 import { SchedulesService } from './schedules/schedules.service';
+import { AuthorizeController } from './authorize/authorize.controller';
+import { AuthorizeService } from './authorize/authorize.service';
 
 @Module({
   imports: [],
@@ -27,6 +29,7 @@ import { SchedulesService } from './schedules/schedules.service';
     SessionTokenController,
     FController,
     SchedulesController,
+    AuthorizeController,
   ],
   providers: [
     AppService,
@@ -37,6 +40,7 @@ import { SchedulesService } from './schedules/schedules.service';
     FService,
     BulletTokensService,
     SchedulesService,
+    AuthorizeService,
   ],
 })
 export class AppModule {}

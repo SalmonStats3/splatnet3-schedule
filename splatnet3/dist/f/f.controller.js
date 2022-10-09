@@ -22,6 +22,7 @@ let FController = class FController {
         this.service = service;
     }
     session_token(request) {
+        console.log(request);
         return this.service.get_imink(request);
     }
 };

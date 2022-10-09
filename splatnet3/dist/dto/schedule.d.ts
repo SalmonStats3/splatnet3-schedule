@@ -3,11 +3,11 @@ export declare class ScheduleRequest {
     'X-Web-Token': string;
 }
 export declare class ScheduleResponse {
-    startTime: string;
-    endTime: string;
+    start_time: string;
+    end_time: string;
     stage: number;
-    weaponList: number[];
-    rareWeapon: number | null;
+    weapon_list: number[];
+    rare_weapon: number | null;
     constructor(document: Node);
 }
 declare class CoopStage {

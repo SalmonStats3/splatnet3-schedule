@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SplatoonTokenResponse = exports.SplatoonTokenResult = exports.SplatoonTokenUser = exports.SplatoonTokenLink = exports.SplatoonTokenPermission = exports.SplatoonTokenFirebase = exports.SplatoonTokenCredential = exports.SplatoonTokenPresence = exports.SplatoonTokenRequest = exports.SplatoonTokenNintendo = exports.SplatoonTokenFriendCode = exports.Membership = exports.SplatoonTokenUpgradeRequired = exports.SplatoonTokenInvalidToken = exports.SplatoonTokenBadRequest = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
 class SplatoonTokenBadRequest {
 }
 __decorate([
@@ -86,35 +88,57 @@ __decorate([
 ], SplatoonTokenNintendo.prototype, "membership", void 0);
 exports.SplatoonTokenNintendo = SplatoonTokenNintendo;
 class SplatoonTokenRequest {
+    constructor(imink, version, naIdToken) {
+        this.version = version;
+        this.f = imink.f;
+        this.timestamp = imink.timestamp;
+        this.request_id = imink.request_id;
+        this.naIdToken = naIdToken;
+    }
 }
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '2.3.1',
+        required: true,
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonTokenRequest.prototype, "version", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 1661322690000,
+        required: true,
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], SplatoonTokenRequest.prototype, "timestamp", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '00000000-0000-0000-0000-000000000000',
+        required: true,
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonTokenRequest.prototype, "request_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 'eyJqa3UiOiJodHRwczovL2FjY291bnRzLm5pbnRlbmRvLmNvbS8xLjAuMC9jZXJ0aWZpY2F0ZXMiLCJraWQiOiI1ZTkwMDRlOC1mMDNiLTRjZTEtYmU2Zi1jNzdlZTM4YTA4MjEiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2MTk0Nzk0NTYsImNvdW50cnkiOiJKUCIsInR5cCI6ImlkX3Rva2VuIiwiYXRfaGFzaCI6InVHUzZvQkJRQUJEN2hWMHJOdnpiS2ciLCJpYXQiOjE2MTk0Nzg1NTYsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMubmludGVuZG8uY29tIiwic3ViIjoiNWFlOGY3YTc4YjBjY2E0ZCIsImF1ZCI6IjcxYjk2M2MxYjdiNmQxMTkiLCJqdGkiOiI0NmJjZmRiMy00MmUyLTRmM2UtYjhlYy1jY2YyYzNmNWZjNGYifQ.qy0QMaQ_QsCajYZkkuHlfRtWETFSUtxKfddtAsRT2EBTGpBxNV2p3VsKtWnNHduH5ZvFKa978sqBmTqjSzfPDJEF2T4JciuXvlQL73zlSPN2GxmI65K030nyvGYebd_d7XRBEEtTKGTWuhHmkk_nglToBlKWr0QG23dWGTA2phJUUU2BKiB44Gdbcq4Fopdtu9wqhtxN2lWc_OtpdHaVlmuQfOXqNHI5ohHFp4wzjrsIUOzUTVtq3Br52c1umWoFxOxnlIHdiNz1bNGWbtY9YfJHdEe1PECyj_oB8cQgkz4DDLHHVFGYz5shtGLZ1JlewVERMQw4JzBD1SiNx1FVWw',
+        required: true,
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonTokenRequest.prototype, "naIdToken", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '9e4e5b2e13f46e399adb5f390fd95b2b78de7e3d7e886633f8d16c479382d5e5d44caca68bc19351fe1d0b69c7',
+        required: true,
     }),
+    (0, class_transformer_1.Expose)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], SplatoonTokenRequest.prototype, "f", void 0);
 exports.SplatoonTokenRequest = SplatoonTokenRequest;

@@ -6,6 +6,7 @@ import { IminkRequest, IminkResponse } from '../dto/imink';
 @Injectable()
 export class FService {
   async get_imink(request: IminkRequest): Promise<IminkResponse> {
+    console.log(request);
     const url = 'https://api.imink.app/f';
     const parameters = {
       hash_method: request.method.valueOf(),

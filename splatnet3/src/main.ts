@@ -20,9 +20,9 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       transformOptions: {
-        ignoreDecorators: true,
+        // ignoreDecorators: true,
         excludeExtraneousValues: true,
-        exposeDefaultValues: true,
+        // exposeDefaultValues: true,
       },
     }),
   );

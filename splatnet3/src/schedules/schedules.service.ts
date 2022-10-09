@@ -11,6 +11,7 @@ import {
   DocumentData,
 } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
+import * as snakecaseKeys from 'snakecase-keys';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -30,12 +31,12 @@ export class SchedulesService {
 
   async add_schedules(results: ScheduleResponse[]): Promise<void> {
     results.forEach(async (result) => {
-      await setDoc(doc(this.db, 'schedules', result.startTime), {
+      await setDoc(doc(this.db, 'schedules', result.start_time), {
         stage: result.stage,
-        startTime: result.startTime,
-        endTime: result.endTime,
-        weaponList: result.weaponList,
-        rareWeapon: result.rareWeapon,
+        startTime: result.start_time,
+        endTime: result.end_time,
+        weaponList: result.weapon_list,
+        rareWeapon: result.rare_weapon,
       });
     });
   }
@@ -45,7 +46,9 @@ export class SchedulesService {
       await getDocs(collection(this.db, 'schedules'))
     ).docs.map((doc) => doc.data());
 
-    const results = schedules.map((schedule) => schedule as ScheduleResponse);
+    const results = schedules.map((schedule) =>
+      snakecaseKeys(schedule as ScheduleResponse),
+    );
 
     return results;
   }
@@ -83,12 +86,12 @@ export class SchedulesService {
       );
 
       results.forEach(async (result) => {
-        await setDoc(doc(this.db, 'schedules', result.startTime), {
+        await setDoc(doc(this.db, 'schedules', result.start_time), {
           stage: result.stage,
-          startTime: result.startTime,
-          endTime: result.endTime,
-          weaponList: result.weaponList,
-          rareWeapon: result.rareWeapon,
+          startTime: result.start_time,
+          endTime: result.end_time,
+          weaponList: result.weapon_list,
+          rareWeapon: result.rare_weapon,
         });
       });
 

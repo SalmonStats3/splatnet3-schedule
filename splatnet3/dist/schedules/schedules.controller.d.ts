@@ -5,5 +5,4 @@ export declare class SchedulesController {
     constructor(service: SchedulesService);
     get_schedules(token: any, version?: string): Promise<ScheduleResponse[]>;
     get_all_schedules(): Promise<ScheduleResponse[]>;
-    add_schedules(): Promise<void>;
 }

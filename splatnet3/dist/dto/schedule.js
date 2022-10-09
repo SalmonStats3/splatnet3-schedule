@@ -89,23 +89,23 @@ __decorate([
 exports.ScheduleRequest = ScheduleRequest;
 class ScheduleResponse {
     constructor(document) {
-        this.startTime = document.startTime;
-        this.endTime = document.endTime;
+        this.start_time = document.startTime;
+        this.end_time = document.endTime;
         this.stage = document.setting.coopStage.coopStageId;
-        this.weaponList = document.setting.weapons.map((weapon) => weapon.image.url);
-        this.rareWeapon = null;
+        this.weapon_list = document.setting.weapons.map((weapon) => weapon.image.url);
+        this.rare_weapon = null;
     }
 }
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: '2022-10-08T08:00:00Z' }),
     __metadata("design:type", String)
-], ScheduleResponse.prototype, "startTime", void 0);
+], ScheduleResponse.prototype, "start_time", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: '2022-10-10T00:00:00Z' }),
     __metadata("design:type", String)
-], ScheduleResponse.prototype, "endTime", void 0);
+], ScheduleResponse.prototype, "end_time", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: 2 }),
@@ -115,12 +115,12 @@ __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: [0, 0, 0, 0] }),
     __metadata("design:type", Array)
-], ScheduleResponse.prototype, "weaponList", void 0);
+], ScheduleResponse.prototype, "weapon_list", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: null }),
     __metadata("design:type", Number)
-], ScheduleResponse.prototype, "rareWeapon", void 0);
+], ScheduleResponse.prototype, "rare_weapon", void 0);
 exports.ScheduleResponse = ScheduleResponse;
 class CoopStage {
 }

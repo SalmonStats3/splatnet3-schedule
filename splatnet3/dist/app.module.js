@@ -24,6 +24,8 @@ const f_service_1 = require("./f/f.service");
 const bullet_tokens_service_1 = require("./bullet_tokens/bullet_tokens.service");
 const schedules_controller_1 = require("./schedules/schedules.controller");
 const schedules_service_1 = require("./schedules/schedules.service");
+const authorize_controller_1 = require("./authorize/authorize.controller");
+const authorize_service_1 = require("./authorize/authorize.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -38,6 +40,7 @@ AppModule = __decorate([
             session_token_controller_1.SessionTokenController,
             f_controller_1.FController,
             schedules_controller_1.SchedulesController,
+            authorize_controller_1.AuthorizeController,
         ],
         providers: [
             app_service_1.AppService,
@@ -48,6 +51,7 @@ AppModule = __decorate([
             f_service_1.FService,
             bullet_tokens_service_1.BulletTokensService,
             schedules_service_1.SchedulesService,
+            authorize_service_1.AuthorizeService,
         ],
     })
 ], AppModule);

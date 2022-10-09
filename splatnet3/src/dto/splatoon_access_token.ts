@@ -1,4 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { IsNotEmpty } from 'class-validator';
+import { IminkResponse } from './imink';
 
 export class SplatoonAccessTokenBadRequest {
   @ApiProperty({ default: 9400 })
@@ -49,23 +52,45 @@ export class SplatoonAccessTokenRequest {
   @ApiProperty({
     example: '2.3.1',
   })
+  @Expose()
+  @IsNotEmpty()
   version: string;
+
   @ApiProperty({
     example:
       'fK0khI0DhU8KmMKxX6oixI:APA91bEcKhiHi4acYjs495cIih46knhphM1SEUJo7eBu4cCPXfBSK82XnpnDkCrowl9DWN8v7hqwN2eDnFaclhnOyUKE7N1YXtwtps4ES7oQPMQmFqb86NK_V0hblS2ojYoDpSOa7mOD',
   })
+  @Expose()
+  @IsNotEmpty()
   naIdToken: string;
+
   @ApiProperty({
     example:
       '9e4e5b2e13f46e399adb5f390fd95b2b78de7e3d7e886633f8d16c479382d5e5d44caca68bc19351fe1d0b69c7',
   })
+  @Expose()
+  @IsNotEmpty()
   f: string;
+
   @ApiProperty({
     example: '00000000-0000-0000-0000-000000000000',
   })
+  @Expose()
+  @IsNotEmpty()
   request_id: string;
+
   @ApiProperty()
+  @Expose()
+  @IsNotEmpty()
   timestamp: number;
+
+  constructor(imink: IminkResponse, version: string, naIdToken: string) {
+    this.version = version;
+    this.f = imink.f;
+    this.request_id = imink.request_id;
+    this.timestamp = imink.timestamp;
+    this.naIdToken = naIdToken;
+  }
 }
 
 export class SplatoonAccessTokenResult {

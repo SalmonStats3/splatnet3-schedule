@@ -5,6 +5,7 @@ export declare enum IminkType {
 export declare class IminkRequest {
     method: IminkType;
     naIdToken: string;
+    constructor(method: IminkType, naIdToken: string);
 }
 export declare class IminkResponse {
     f: string;

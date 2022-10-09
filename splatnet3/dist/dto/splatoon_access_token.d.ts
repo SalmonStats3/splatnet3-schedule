@@ -1,3 +1,4 @@
+import { IminkResponse } from './imink';
 export declare class SplatoonAccessTokenBadRequest {
     status: number;
     errorMessage: string;
@@ -29,6 +30,7 @@ export declare class SplatoonAccessTokenRequest {
     f: string;
     request_id: string;
     timestamp: number;
+    constructor(imink: IminkResponse, version: string, naIdToken: string);
 }
 export declare class SplatoonAccessTokenResult {
     accessToken: string;

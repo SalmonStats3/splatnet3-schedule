@@ -17,8 +17,8 @@ export class TokenController {
   @ApiOperation({ operationId: 'アクセストークン' })
   @ApiOkResponse()
   @ApiBadRequestResponse()
-  session_token(
-    @Body(new ValidationPipe({ transform: true })) request: AccessTokenRequest,
+  access_token(
+    @Body() request: AccessTokenRequest,
   ): Promise<AccessTokenResponse> {
     return this.service.get_access_token(request);
   }
