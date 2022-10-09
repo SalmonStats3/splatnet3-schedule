@@ -11,8 +11,42 @@ const common_1 = require("@nestjs/common");
 const class_transformer_1 = require("class-transformer");
 const axios_1 = require("axios");
 const schedule_1 = require("../dto/schedule");
+const lite_1 = require("firebase/firestore/lite");
+const app_1 = require("firebase/app");
+const firebaseConfig = {
+    apiKey: 'AIzaSyBl8OR-wdFLZ3HnnTUzEq4t4eXce5Xu8gE',
+    authDomain: 'tkgstratorwork.firebaseapp.com',
+    projectId: 'tkgstratorwork',
+    storageBucket: 'tkgstratorwork.appspot.com',
+    messagingSenderId: '245057171773',
+    appId: '1:245057171773:web:2397fbf88981d07569d554',
+    measurementId: 'G-3XC9LXLCNL',
+};
 let SchedulesService = class SchedulesService {
+    constructor() {
+        this.app = (0, app_1.initializeApp)(firebaseConfig);
+        this.db = (0, lite_1.getFirestore)(this.app);
+    }
+    async add_schedules(results) {
+        results.forEach(async (result) => {
+            await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.startTime), {
+                stage: result.stage,
+                startTime: result.startTime,
+                endTime: result.endTime,
+                weaponList: result.weaponList,
+                rareWeapon: result.rareWeapon,
+            });
+        });
+    }
+    async get_all_schedules() {
+        const schedules = (await (0, lite_1.getDocs)((0, lite_1.collection)(this.db, 'schedules'))).docs.map((doc) => doc.data());
+        const results = schedules.map((schedule) => schedule);
+        return results;
+    }
     async get_schedules(token, version) {
+        if (token === undefined) {
+            throw new common_1.BadRequestException('X-Web-Token is required');
+        }
         const url = 'https://api.lp1.av5ja.srv.nintendo.net/api/graphql';
         const parameters = {
             variables: {},
@@ -30,10 +64,20 @@ let SchedulesService = class SchedulesService {
         try {
             const response = await axios_1.default.post(url, parameters);
             const results = (0, class_transformer_1.plainToClass)(schedule_1.Schedule, response.data).data.coopGroupingSchedule.regularSchedules.nodes.map((node) => new schedule_1.ScheduleResponse(node));
+            results.forEach(async (result) => {
+                await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.startTime), {
+                    stage: result.stage,
+                    startTime: result.startTime,
+                    endTime: result.endTime,
+                    weaponList: result.weaponList,
+                    rareWeapon: result.rareWeapon,
+                });
+            });
             return results;
         }
         catch (error) {
-            throw new common_1.HttpException(error.resonse.data, error.response.status);
+            console.log(error);
+            throw new common_1.BadRequestException('X-Web-Token is expired');
         }
     }
 };

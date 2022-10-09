@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform, Type } from 'class-transformer';
 import { ValidateNested } from 'class-validator';
 import * as dayjs from 'dayjs';
+import { document } from 'firebase-functions/v1/firestore';
+import { DocumentData } from 'firebase/firestore/lite';
 
 const weaponLists: { [name: string]: number } = {
   '473fffb2442075078d8bb7125744905abdeae651b6a5b7453ae295582e45f7d1': -1,
@@ -67,27 +69,41 @@ const weaponLists: { [name: string]: number } = {
 };
 
 export class ScheduleRequest {
-  bullet_token: string;
+  @ApiProperty()
+  'X-Web-View-Ver': string;
+  @ApiProperty()
+  'X-Web-Token': string;
 }
 
 export class ScheduleResponse {
+  @Expose()
   @ApiProperty({ example: '2022-10-08T08:00:00Z' })
   startTime: string;
+
+  @Expose()
   @ApiProperty({ example: '2022-10-10T00:00:00Z' })
   endTime: string;
+
+  @Expose()
   @ApiProperty({ example: 2 })
   stage: number;
-  @ApiProperty({ example: [0, 0, 0, 0] })
-  weapon_list: number[];
-  @ApiProperty({ example: null })
-  rare_weapon: number | null;
 
-  constructor(node: Node) {
-    this.startTime = node.startTime;
-    this.endTime = node.endTime;
-    this.stage = node.setting.coopStage.coopStageId;
-    this.weapon_list = node.setting.weapons.map((weapon) => weapon.image.url);
-    this.rare_weapon = null;
+  @Expose()
+  @ApiProperty({ example: [0, 0, 0, 0] })
+  weaponList: number[];
+
+  @Expose()
+  @ApiProperty({ example: null })
+  rareWeapon: number | null;
+
+  constructor(document: Node) {
+    this.startTime = document.startTime;
+    this.endTime = document.endTime;
+    this.stage = document.setting.coopStage.coopStageId;
+    this.weaponList = document.setting.weapons.map(
+      (weapon) => weapon.image.url,
+    );
+    this.rareWeapon = null;
   }
 }
 

@@ -1,13 +1,14 @@
 export declare class ScheduleRequest {
-    bullet_token: string;
+    'X-Web-View-Ver': string;
+    'X-Web-Token': string;
 }
 export declare class ScheduleResponse {
     startTime: string;
     endTime: string;
     stage: number;
-    weapon_list: number[];
-    rare_weapon: number | null;
-    constructor(node: Node);
+    weaponList: number[];
+    rareWeapon: number | null;
+    constructor(document: Node);
 }
 declare class CoopStage {
     coopStageId: number;

@@ -1,14 +1,62 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import axios from 'axios';
 import { Schedule, ScheduleResponse } from 'src/dto/schedule';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  DocumentData,
+} from 'firebase/firestore/lite';
+import { initializeApp } from 'firebase/app';
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: 'AIzaSyBl8OR-wdFLZ3HnnTUzEq4t4eXce5Xu8gE',
+  authDomain: 'tkgstratorwork.firebaseapp.com',
+  projectId: 'tkgstratorwork',
+  storageBucket: 'tkgstratorwork.appspot.com',
+  messagingSenderId: '245057171773',
+  appId: '1:245057171773:web:2397fbf88981d07569d554',
+  measurementId: 'G-3XC9LXLCNL',
+};
 
 @Injectable()
 export class SchedulesService {
+  readonly app = initializeApp(firebaseConfig);
+  readonly db = getFirestore(this.app);
+
+  async add_schedules(results: ScheduleResponse[]): Promise<void> {
+    results.forEach(async (result) => {
+      await setDoc(doc(this.db, 'schedules', result.startTime), {
+        stage: result.stage,
+        startTime: result.startTime,
+        endTime: result.endTime,
+        weaponList: result.weaponList,
+        rareWeapon: result.rareWeapon,
+      });
+    });
+  }
+
+  async get_all_schedules(): Promise<ScheduleResponse[]> {
+    const schedules = (
+      await getDocs(collection(this.db, 'schedules'))
+    ).docs.map((doc) => doc.data());
+
+    const results = schedules.map((schedule) => schedule as ScheduleResponse);
+
+    return results;
+  }
+
   async get_schedules(
     token: string,
     version: string,
   ): Promise<ScheduleResponse[]> {
+    if (token === undefined) {
+      throw new BadRequestException('X-Web-Token is required');
+    }
     const url = 'https://api.lp1.av5ja.srv.nintendo.net/api/graphql';
     const parameters = {
       variables: {},
@@ -27,15 +75,27 @@ export class SchedulesService {
 
     try {
       const response = await axios.post(url, parameters);
-      const results = plainToClass(
+      const results: ScheduleResponse[] = plainToClass(
         Schedule,
         response.data,
       ).data.coopGroupingSchedule.regularSchedules.nodes.map(
         (node) => new ScheduleResponse(node),
       );
+
+      results.forEach(async (result) => {
+        await setDoc(doc(this.db, 'schedules', result.startTime), {
+          stage: result.stage,
+          startTime: result.startTime,
+          endTime: result.endTime,
+          weaponList: result.weaponList,
+          rareWeapon: result.rareWeapon,
+        });
+      });
+
       return results;
     } catch (error) {
-      throw new HttpException(error.resonse.data, error.response.status);
+      console.log(error);
+      throw new BadRequestException('X-Web-Token is expired');
     }
   }
 }
