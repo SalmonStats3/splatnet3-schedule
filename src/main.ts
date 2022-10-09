@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   const build = path.resolve(process.cwd(), 'docs');
-  const options = new DocumentBuilder().setTitle('API Documents').build();
+  const options = new DocumentBuilder().setTitle('SplatNet3').build();
   const documents = SwaggerModule.createDocument(app, options);
   const output = path.resolve(build, 'index');
   mkdir(build, { recursive: true }, (_) => {});
