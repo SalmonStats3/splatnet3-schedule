@@ -64,9 +64,19 @@ let SchedulesService = class SchedulesService {
         };
         try {
             const response = await axios_1.default.post(url, parameters);
-            const results = (0, class_transformer_1.plainToClass)(schedule_1.Schedule, response.data).data.coopGroupingSchedule.regularSchedules.nodes.map((node) => new schedule_1.ScheduleResponse(node));
+            const schedule = (0, class_transformer_1.plainToClass)(schedule_1.Schedule, response.data).data.coopGroupingSchedule;
+            const schedules = schedule.bigRunSchedules.nodes.concat(schedule.regularSchedules.nodes);
+            console.log(schedules);
+            const results = schedules.map((node) => new schedule_1.ScheduleResponse(node));
             results.forEach(async (result) => {
-                console.log(result);
+                await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.start_time), {
+                    stageId: result.stage_id,
+                    startTime: result.start_time,
+                    endTime: result.end_time,
+                    weaponList: result.weapon_list,
+                    rareWeapon: result.rare_weapon,
+                    setting: result.mode,
+                });
             });
             return results;
         }

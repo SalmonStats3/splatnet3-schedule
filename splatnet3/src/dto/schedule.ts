@@ -77,6 +77,16 @@ export class ScheduleRequest {
   'X-Web-Token': string;
 }
 
+enum ModeType {
+  Regular = 'REGULAR',
+  BigRun = 'BIGRUN',
+}
+
+enum CoopSetting {
+  CoopNormalSetting = 'CoopNormalSetting',
+  CoopBigRunSetting = 'CoopBigRunSetting',
+}
+
 export class ScheduleResponse {
   @Expose()
   @ApiProperty({ example: '2022-10-08T08:00:00Z' })
@@ -98,6 +108,10 @@ export class ScheduleResponse {
   @ApiProperty({ example: null })
   rare_weapon: number | null;
 
+  @Expose()
+  @ApiProperty({ example: ModeType.Regular })
+  mode: CoopSetting;
+
   constructor(document: Node) {
     this.start_time = document.startTime;
     this.end_time = document.endTime;
@@ -106,6 +120,7 @@ export class ScheduleResponse {
       (weapon) => weapon.image.url,
     );
     this.rare_weapon = null;
+    this.mode = document.setting.__isCoopSetting;
   }
 }
 
@@ -113,9 +128,8 @@ class CoopStage {
   @ApiProperty()
   @Transform((param) => {
     const value = atob(param.value);
-    console.log(value);
-    const regex = new RegExp('CoopStage-([0-9])');
-    return value.match(regex)[1];
+    const regex = new RegExp('CoopStage-([0-9].*)');
+    return parseInt(value.match(regex)[1]);
   })
   id: number;
 }
@@ -141,12 +155,15 @@ class Setting {
   coopStage: CoopStage;
 
   @ApiProperty()
+  __isCoopSetting: CoopSetting;
+
+  @ApiProperty()
   @ValidateNested({ each: true })
   @Type(() => Weapon)
   weapons: Weapon[];
 }
 
-class Node {
+export class Node {
   @ApiProperty()
   @Transform((param) => dayjs(param.value).utc().format())
   startTime: string;
@@ -166,11 +183,13 @@ class RegularSchedule {
   nodes: Node[];
 }
 
-class CoopGroupingSchedule {
+export class CoopGroupingSchedule {
   @ApiProperty()
   @Type(() => RegularSchedule)
   regularSchedules: RegularSchedule;
-  // bigRunSchedules: Schedules;
+  @ApiProperty()
+  @Type(() => RegularSchedule)
+  bigRunSchedules: RegularSchedule;
 }
 
 class DataClass {

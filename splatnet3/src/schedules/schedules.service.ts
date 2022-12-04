@@ -1,7 +1,12 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import axios from 'axios';
-import { Schedule, ScheduleResponse } from 'src/dto/schedule';
+import {
+  CoopGroupingSchedule,
+  Node,
+  Schedule,
+  ScheduleResponse,
+} from 'src/dto/schedule';
 import {
   getFirestore,
   collection,
@@ -78,22 +83,27 @@ export class SchedulesService {
 
     try {
       const response = await axios.post(url, parameters);
-      const results: ScheduleResponse[] = plainToClass(
+      const schedule: CoopGroupingSchedule = plainToClass(
         Schedule,
         response.data,
-      ).data.coopGroupingSchedule.regularSchedules.nodes.map(
+      ).data.coopGroupingSchedule;
+      const schedules: Node[] = schedule.bigRunSchedules.nodes.concat(
+        schedule.regularSchedules.nodes,
+      );
+      console.log(schedules);
+      const results: ScheduleResponse[] = schedules.map(
         (node) => new ScheduleResponse(node),
       );
 
       results.forEach(async (result) => {
-        console.log(result);
-        // await setDoc(doc(this.db, 'schedules', result.start_time), {
-        //   stageId: result.stage_id,
-        //   startTime: result.start_time,
-        //   endTime: result.end_time,
-        //   weaponList: result.weapon_list,
-        //   rareWeapon: result.rare_weapon,
-        // });
+        await setDoc(doc(this.db, 'schedules', result.start_time), {
+          stageId: result.stage_id,
+          startTime: result.start_time,
+          endTime: result.end_time,
+          weaponList: result.weapon_list,
+          rareWeapon: result.rare_weapon,
+          setting: result.mode,
+        });
       });
 
       return results;

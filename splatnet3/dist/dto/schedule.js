@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Schedule = exports.ScheduleResponse = exports.ScheduleRequest = void 0;
+exports.Schedule = exports.CoopGroupingSchedule = exports.Node = exports.ScheduleResponse = exports.ScheduleRequest = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
@@ -91,6 +91,16 @@ __decorate([
     __metadata("design:type", String)
 ], ScheduleRequest.prototype, "X-Web-Token", void 0);
 exports.ScheduleRequest = ScheduleRequest;
+var ModeType;
+(function (ModeType) {
+    ModeType["Regular"] = "REGULAR";
+    ModeType["BigRun"] = "BIGRUN";
+})(ModeType || (ModeType = {}));
+var CoopSetting;
+(function (CoopSetting) {
+    CoopSetting["CoopNormalSetting"] = "CoopNormalSetting";
+    CoopSetting["CoopBigRunSetting"] = "CoopBigRunSetting";
+})(CoopSetting || (CoopSetting = {}));
 class ScheduleResponse {
     constructor(document) {
         this.start_time = document.startTime;
@@ -98,6 +108,7 @@ class ScheduleResponse {
         this.stage_id = document.setting.coopStage.id;
         this.weapon_list = document.setting.weapons.map((weapon) => weapon.image.url);
         this.rare_weapon = null;
+        this.mode = document.setting.__isCoopSetting;
     }
 }
 __decorate([
@@ -125,6 +136,11 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: null }),
     __metadata("design:type", Number)
 ], ScheduleResponse.prototype, "rare_weapon", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    (0, swagger_1.ApiProperty)({ example: ModeType.Regular }),
+    __metadata("design:type", String)
+], ScheduleResponse.prototype, "mode", void 0);
 exports.ScheduleResponse = ScheduleResponse;
 class CoopStage {
 }
@@ -132,9 +148,8 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_transformer_1.Transform)((param) => {
         const value = atob(param.value);
-        console.log(value);
-        const regex = new RegExp('CoopStage-([0-9])');
-        return value.match(regex)[1];
+        const regex = new RegExp('CoopStage-([0-9].*)');
+        return parseInt(value.match(regex)[1]);
     }),
     __metadata("design:type", Number)
 ], CoopStage.prototype, "id", void 0);
@@ -164,6 +179,10 @@ __decorate([
 ], Setting.prototype, "coopStage", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], Setting.prototype, "__isCoopSetting", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => Weapon),
     __metadata("design:type", Array)
@@ -184,6 +203,7 @@ __decorate([
     (0, class_transformer_1.Type)(() => Setting),
     __metadata("design:type", Setting)
 ], Node.prototype, "setting", void 0);
+exports.Node = Node;
 class RegularSchedule {
 }
 __decorate([
@@ -199,6 +219,12 @@ __decorate([
     (0, class_transformer_1.Type)(() => RegularSchedule),
     __metadata("design:type", RegularSchedule)
 ], CoopGroupingSchedule.prototype, "regularSchedules", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_transformer_1.Type)(() => RegularSchedule),
+    __metadata("design:type", RegularSchedule)
+], CoopGroupingSchedule.prototype, "bigRunSchedules", void 0);
+exports.CoopGroupingSchedule = CoopGroupingSchedule;
 class DataClass {
 }
 __decorate([

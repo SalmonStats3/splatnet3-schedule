@@ -2,12 +2,17 @@ export declare class ScheduleRequest {
     'X-Web-View-Ver': string;
     'X-Web-Token': string;
 }
+declare enum CoopSetting {
+    CoopNormalSetting = "CoopNormalSetting",
+    CoopBigRunSetting = "CoopBigRunSetting"
+}
 export declare class ScheduleResponse {
     start_time: string;
     end_time: string;
     stage_id: number;
     weapon_list: number[];
     rare_weapon: number | null;
+    mode: CoopSetting;
     constructor(document: Node);
 }
 declare class CoopStage {
@@ -21,9 +26,10 @@ declare class Weapon {
 }
 declare class Setting {
     coopStage: CoopStage;
+    __isCoopSetting: CoopSetting;
     weapons: Weapon[];
 }
-declare class Node {
+export declare class Node {
     startTime: string;
     endTime: string;
     setting: Setting;
@@ -31,8 +37,9 @@ declare class Node {
 declare class RegularSchedule {
     nodes: Node[];
 }
-declare class CoopGroupingSchedule {
+export declare class CoopGroupingSchedule {
     regularSchedules: RegularSchedule;
+    bigRunSchedules: RegularSchedule;
 }
 declare class DataClass {
     coopGroupingSchedule: CoopGroupingSchedule;

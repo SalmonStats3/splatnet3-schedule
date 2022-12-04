@@ -12,7 +12,6 @@ import * as timezone from 'dayjs/plugin/timezone';
 async function bootstrap() {
   dayjs.extend(utc);
   dayjs.extend(timezone);
-  // dayjs.tz.setDefault('Asia/Tokyo');
 
   const app = await NestFactory.create(AppModule);
 
