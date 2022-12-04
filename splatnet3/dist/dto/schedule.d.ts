@@ -5,13 +5,13 @@ export declare class ScheduleRequest {
 export declare class ScheduleResponse {
     start_time: string;
     end_time: string;
-    stage: number;
+    stage_id: number;
     weapon_list: number[];
     rare_weapon: number | null;
     constructor(document: Node);
 }
 declare class CoopStage {
-    coopStageId: number;
+    id: number;
 }
 declare class Image {
     url: number;

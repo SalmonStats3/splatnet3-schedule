@@ -31,7 +31,7 @@ let SchedulesService = class SchedulesService {
     async add_schedules(results) {
         results.forEach(async (result) => {
             await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.start_time), {
-                stage: result.stage,
+                stageId: result.stage_id,
                 startTime: result.start_time,
                 endTime: result.end_time,
                 weaponList: result.weapon_list,
@@ -54,7 +54,7 @@ let SchedulesService = class SchedulesService {
             extensions: {
                 persistedQuery: {
                     version: 1,
-                    sha256Hash: '7d4bb0565342b7385ceb97d109e14897',
+                    sha256Hash: '730cd98e84f1030d3e9ac86b6f1aae13',
                 },
             },
         };
@@ -67,13 +67,6 @@ let SchedulesService = class SchedulesService {
             const results = (0, class_transformer_1.plainToClass)(schedule_1.Schedule, response.data).data.coopGroupingSchedule.regularSchedules.nodes.map((node) => new schedule_1.ScheduleResponse(node));
             results.forEach(async (result) => {
                 console.log(result);
-                await (0, lite_1.setDoc)((0, lite_1.doc)(this.db, 'schedules', result.start_time), {
-                    stage: result.stage,
-                    startTime: result.start_time,
-                    endTime: result.end_time,
-                    weaponList: result.weapon_list,
-                    rareWeapon: result.rare_weapon,
-                });
             });
             return results;
         }

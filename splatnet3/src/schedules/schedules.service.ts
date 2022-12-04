@@ -32,7 +32,7 @@ export class SchedulesService {
   async add_schedules(results: ScheduleResponse[]): Promise<void> {
     results.forEach(async (result) => {
       await setDoc(doc(this.db, 'schedules', result.start_time), {
-        stage: result.stage,
+        stageId: result.stage_id,
         startTime: result.start_time,
         endTime: result.end_time,
         weaponList: result.weapon_list,
@@ -66,7 +66,7 @@ export class SchedulesService {
       extensions: {
         persistedQuery: {
           version: 1,
-          sha256Hash: '7d4bb0565342b7385ceb97d109e14897',
+          sha256Hash: '730cd98e84f1030d3e9ac86b6f1aae13',
         },
       },
     };
@@ -87,13 +87,13 @@ export class SchedulesService {
 
       results.forEach(async (result) => {
         console.log(result);
-        await setDoc(doc(this.db, 'schedules', result.start_time), {
-          stage: result.stage,
-          startTime: result.start_time,
-          endTime: result.end_time,
-          weaponList: result.weapon_list,
-          rareWeapon: result.rare_weapon,
-        });
+        // await setDoc(doc(this.db, 'schedules', result.start_time), {
+        //   stageId: result.stage_id,
+        //   startTime: result.start_time,
+        //   endTime: result.end_time,
+        //   weaponList: result.weapon_list,
+        //   rareWeapon: result.rare_weapon,
+        // });
       });
 
       return results;

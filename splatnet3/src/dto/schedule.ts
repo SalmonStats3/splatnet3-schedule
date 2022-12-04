@@ -88,7 +88,7 @@ export class ScheduleResponse {
 
   @Expose()
   @ApiProperty({ example: 2 })
-  stage: number;
+  stage_id: number;
 
   @Expose()
   @ApiProperty({ example: [0, 0, 0, 0] })
@@ -101,7 +101,7 @@ export class ScheduleResponse {
   constructor(document: Node) {
     this.start_time = document.startTime;
     this.end_time = document.endTime;
-    this.stage = document.setting.coopStage.coopStageId;
+    this.stage_id = document.setting.coopStage.id;
     this.weapon_list = document.setting.weapons.map(
       (weapon) => weapon.image.url,
     );
@@ -110,7 +110,14 @@ export class ScheduleResponse {
 }
 
 class CoopStage {
-  coopStageId: number;
+  @ApiProperty()
+  @Transform((param) => {
+    const value = atob(param.value);
+    console.log(value);
+    const regex = new RegExp('CoopStage-([0-9])');
+    return value.match(regex)[1];
+  })
+  id: number;
 }
 
 class Image {
@@ -129,6 +136,8 @@ class Weapon {
 }
 
 class Setting {
+  @ApiProperty()
+  @Type(() => CoopStage)
   coopStage: CoopStage;
 
   @ApiProperty()

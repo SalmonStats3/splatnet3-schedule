@@ -95,7 +95,7 @@ class ScheduleResponse {
     constructor(document) {
         this.start_time = document.startTime;
         this.end_time = document.endTime;
-        this.stage = document.setting.coopStage.coopStageId;
+        this.stage_id = document.setting.coopStage.id;
         this.weapon_list = document.setting.weapons.map((weapon) => weapon.image.url);
         this.rare_weapon = null;
     }
@@ -114,7 +114,7 @@ __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: 2 }),
     __metadata("design:type", Number)
-], ScheduleResponse.prototype, "stage", void 0);
+], ScheduleResponse.prototype, "stage_id", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)({ example: [0, 0, 0, 0] }),
@@ -128,6 +128,16 @@ __decorate([
 exports.ScheduleResponse = ScheduleResponse;
 class CoopStage {
 }
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_transformer_1.Transform)((param) => {
+        const value = atob(param.value);
+        console.log(value);
+        const regex = new RegExp('CoopStage-([0-9])');
+        return value.match(regex)[1];
+    }),
+    __metadata("design:type", Number)
+], CoopStage.prototype, "id", void 0);
 class Image {
 }
 __decorate([
@@ -147,6 +157,11 @@ __decorate([
 ], Weapon.prototype, "image", void 0);
 class Setting {
 }
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_transformer_1.Type)(() => CoopStage),
+    __metadata("design:type", CoopStage)
+], Setting.prototype, "coopStage", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
