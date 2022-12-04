@@ -26,6 +26,7 @@ const weaponLists = {
     '5607f7014bbc7339feeb67218c05ef19c7a466152b1bd056a899b955127ea433': 70,
     fe2b351799aa48fcb48154299ff0ccf0b0413fc291ffc49456e93db29d2f1db5: 80,
     '035920eb9428955c25aecb8a56c2b1b58f3e322af3657d921db1778de4b80c59': 90,
+    '8034dd1acde77c1a2df32197c12faa5ba1d65b43d008edd1b40f16fa8d106944': 100,
     '10d4a1584d1428cb164ddfbc5febc9b1e77fd05e2e9ed9de851838a94d202c15': 200,
     '29ccca01285a04f42dc15911f3cd1ee940f9ca0e94c75ba07378828afb3165c0': 210,
     '0d2963b386b6da598b8da1087eab3f48b99256e2e6a20fc8bbe53b34579fb338': 220,
@@ -39,6 +40,7 @@ const weaponLists = {
     '536b28d9dd9fc6633a4bea4a141d63942a0ba3470fc504e5b0d02ee408798a87': 1010,
     '18fdddee9c918842f076c10f12e46d891aca302d2677bf968ee2fe4e65b831a8': 1020,
     '8351e99589f03f49b5d681d36b083aaffd9c486a0558ab957ac44b0db0bb58bb': 1030,
+    '137559b59547c853e04c6cc8239cff648d2f6b297edb15d45504fae91dfc9765': 1040,
     '260428edbf919f5c9e8c8517516d6a7a8133cf7348d216768ab4fb9434053f08': 1100,
     ce0bb38588e497586a60f16e0aca914f181f42be29953742fd4a55a97e2ebd22: 1110,
     '0cdd6036a6677d68bf28e1014b09a6f5a043e969027e532cd008049baace6527': 2000,
@@ -48,6 +50,7 @@ const weaponLists = {
     ebc007b2f27b0813f0c9ce7371bdab78c62e6a05777c928bf34222a79d99de8f: 2040,
     '9c71334ea792864a00531040e0d05a183512e11277fd1fa681170874ba039268': 2050,
     '2b349390a464710982d7e1496130898e7b5a66c301aa44fc9e19332d42e360ad': 2060,
+    '082489b182fbbabddde40831dac5867d6acc4778b6a38d8f5c8d445455d638eb': 2070,
     '4a8bf6b4ad3b2942728bbd270bf64d5848b64f3c843a3b12ef83c0ebb5de1b3d': 3000,
     f3dbd98d5b0e89f7be7eff25a5c63a06045fe64d8ffd5886e79c855e16791563: 3010,
     bd2eca9a7b4109c1d96e804c74aaf2ca525011e1348d0b312fe4f034e35e5d4c: 3020,
@@ -75,6 +78,7 @@ const weaponLists = {
     '3380019464e3111a0f40e633be25f73ad34ec1844d2dc7852a349b29b238932b': 26900,
     bf89bcf3d3a51badd78b436266e6b7927d99ac386e083023df3551da6b39e412: 23900,
     '36e03d8d1e6bc4f7449c5450f4410c6c8449cde0548797d22ab641cd488d2060': 27900,
+    '480bc1dfb0beed1ce4625a6a6b035e4bac711de019bb9b0e5125e4e7e39e0719': 28900,
 };
 class ScheduleRequest {
 }
@@ -153,12 +157,12 @@ class Node {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_transformer_1.Transform)((param) => dayjs(param.value).format()),
+    (0, class_transformer_1.Transform)((param) => dayjs(param.value).utc().format()),
     __metadata("design:type", String)
 ], Node.prototype, "startTime", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_transformer_1.Transform)((param) => dayjs(param.value).format()),
+    (0, class_transformer_1.Transform)((param) => dayjs(param.value).utc().format()),
     __metadata("design:type", String)
 ], Node.prototype, "endTime", void 0);
 __decorate([

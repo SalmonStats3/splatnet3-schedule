@@ -13,7 +13,6 @@ const timezone = require("dayjs/plugin/timezone");
 async function bootstrap() {
     dayjs.extend(utc);
     dayjs.extend(timezone);
-    dayjs.tz.setDefault('Asia/Tokyo');
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalPipes(new common_1.ValidationPipe({
         transform: true,

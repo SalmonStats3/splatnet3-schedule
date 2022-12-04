@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BulletTokenRequest {
-  @ApiProperty({ default: '1.0.0-42f70e51' })
+  @ApiProperty({ default: '2.0.0-18810d39' })
   'X-Web-View-Ver': string;
 
   @ApiProperty({ default: 'US' })

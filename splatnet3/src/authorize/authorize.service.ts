@@ -23,7 +23,7 @@ export class AuthorizeService {
   ) {}
 
   async update(request: AccessTokenRequest): Promise<void> {
-    const web_version: string = '1.0.0-216d0219';
+    const web_version: string = '2.0.0-18810d39';
     try {
       const bullet_token = await (await this.authorize(request)).bulletToken;
       await this.schedule.get_schedules(bullet_token, web_version);
@@ -33,8 +33,8 @@ export class AuthorizeService {
   }
 
   async authorize(request: AccessTokenRequest): Promise<BulletTokenResponse> {
-    const version: string = '2.3.1';
-    const web_version: string = '1.0.0-216d0219';
+    const version: string = '2.4.0';
+    const web_version: string = '2.0.0-18810d39';
     const access_token = await (
       await this.token.get_access_token(request)
     ).access_token;

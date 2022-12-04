@@ -31,7 +31,7 @@ let AuthorizeService = class AuthorizeService {
         this.schedule = schedule;
     }
     async update(request) {
-        const web_version = '1.0.0-216d0219';
+        const web_version = '2.0.0-18810d39';
         try {
             const bullet_token = await (await this.authorize(request)).bulletToken;
             await this.schedule.get_schedules(bullet_token, web_version);
@@ -41,8 +41,8 @@ let AuthorizeService = class AuthorizeService {
         }
     }
     async authorize(request) {
-        const version = '2.3.1';
-        const web_version = '1.0.0-216d0219';
+        const version = '2.4.0';
+        const web_version = '2.0.0-18810d39';
         const access_token = await (await this.token.get_access_token(request)).access_token;
         const imink_nso = await this.f.get_imink(new imink_1.IminkRequest(imink_1.IminkType.NSO, access_token));
         const splatoon_token = (await this.service.get_splatoon_token(new splatoon_token_1.SplatoonTokenRequest(imink_nso, version, access_token))).result.webApiServerCredential.accessToken;

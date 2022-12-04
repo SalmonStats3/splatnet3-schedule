@@ -86,6 +86,7 @@ export class SchedulesService {
       );
 
       results.forEach(async (result) => {
+        console.log(result);
         await setDoc(doc(this.db, 'schedules', result.start_time), {
           stage: result.stage,
           startTime: result.start_time,

@@ -19,7 +19,7 @@ class BulletTokenRequest {
     }
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({ default: '1.0.0-42f70e51' }),
+    (0, swagger_1.ApiProperty)({ default: '2.0.0-18810d39' }),
     __metadata("design:type", String)
 ], BulletTokenRequest.prototype, "X-Web-View-Ver", void 0);
 __decorate([

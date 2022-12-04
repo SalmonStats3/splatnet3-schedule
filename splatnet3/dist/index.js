@@ -7,11 +7,16 @@ const app_module_1 = require("./app.module");
 const express = require("express");
 const helmet_1 = require("helmet");
 const functions = require("firebase-functions");
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
 const server = express();
 const createNestServer = async (expressInstance) => {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(expressInstance));
     app.use((0, helmet_1.default)());
     app.enableCors();
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
     console.log('the server is starting @ firebase');
     return app.init();
 };
